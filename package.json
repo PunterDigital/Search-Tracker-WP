@@ -1,0 +1,19 @@
+{
+  "name": "search-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "@wordpress/eslint-plugin": "^9.3.0",
+    "@wordpress/scripts": "^28.6.0",
+    "eslint": "^8.11.0",
+    "jest": "^27.5.1"
+  },
+  "scripts": {
+    "lint:js": "eslint .",
+    "lint:css": "stylelint '**/*.css'",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC"
+}

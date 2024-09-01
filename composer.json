@@ -1,0 +1,34 @@
+{
+    "name": "punterdigital/search-tracker",
+    "description": "Search Tracker is WordPress Plugin",
+    "authors": [
+        {
+            "name": "Shay Punter",
+            "email": "spunter@punterdigital.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "squizlabs/php_codesniffer": "^3.6",
+        "wp-coding-standards/wpcs": "^2.3",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+        "phpmd/phpmd": "^2.10",
+        "10up/wp_mock": "^0.4.2",
+        "yoast/phpunit-polyfills": "^1.0"
+    },
+    "scripts": {
+        "phpcs": "phpcs --standard=WordPress",
+        "phpcbf": "phpcbf --standard=WordPress",
+        "phpmd": "phpmd . text cleancode,codesize,controversial,design,naming,unusedcode",
+        "phpunit": "phpunit"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

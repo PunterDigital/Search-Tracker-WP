@@ -1,0 +1,117 @@
+name: WordPress Plugin CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: ['7.4', '8.0', '8.1', '8.2', '8.3']
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, intl
+          tools: composer:v2
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run PHP Syntax Check
+        run: find . -name "*.php" -print0 | xargs -0 -n1 -P4 php -l
+
+      - name: PHP Code Sniffer
+        run: vendor/bin/phpcs --standard=WordPress
+
+      - name: PHP Compatibility Check
+        run: vendor/bin/phpcs --standard=PHPCompatibilityWP --runtime-set testVersion 7.4- .
+
+      - name: PHP Mess Detector
+        run: vendor/bin/phpmd . text cleancode,codesize,controversial,design,naming,unusedcode
+
+      - name: PHPUnit Tests
+        run: vendor/bin/phpunit
+
+  js-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npx eslint .
+
+      - name: Run Jest Tests
+        run: npm test
+
+  i18n:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: mbstring, intl
+          tools: composer:v2, wp-cli
+
+      - name: Check for text-domain mismatches
+        run: wp i18n make-pot . languages/search_tracker.pot --exclude="vendor,node_modules" --skip-audit
+
+      - name: Check for JavaScript translations
+        run: wp i18n make-json languages --no-purge
+
+  readme-validator:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Validate readme.txt
+        uses: 10up/action-wordpress-plugin-readme-validator@stable
+
+  assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check plugin assets
+        run: |
+          if [ ! -f "assets/icon-256x256.png" ]; then
+            echo "Error: assets/icon-256x256.png is missing"
+            exit 1
+          fi
+          if [ ! -f "assets/banner-1544x500.png" ]; then
+            echo "Error: assets/banner-1544x500.png is missing"
+            exit 1
+          fi
+
+  svn-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check for .svn directory
+        run: |
+          if [ -d ".svn" ]; then
+            echo "Error: .svn directory should not be in the Git repository"
+            exit 1
+          fi
