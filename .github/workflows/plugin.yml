@@ -29,7 +29,7 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Run PHP Syntax Check
-        run: find . -name "*.php" -print0 | xargs -0 -n1 -P4 php -l
+        run: find . -name "*.php" -not -path "./vendor/*" -not -path "./build/*" -not -path "./dist/*" -print0 | xargs -0 -n1 -P4 php -l
 
       - name: PHP Code Sniffer
         run: vendor/bin/phpcs --standard=WordPress
