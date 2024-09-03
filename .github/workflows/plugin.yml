@@ -43,7 +43,7 @@ jobs:
         run: find . -name "*.php" -not -path "./vendor/*" -not -path "./build/*" -not -path "./dist/*" -print0 | xargs -0 -n1 -P4 php -l
 
       - name: PHP Code Sniffer
-        run: vendor/bin/phpcs ---config-set ignore_warnings_on_exit 1 --report=full --standard=WordPress --extensions=php --ignore=*/vendor/*,*/node_modules/* .
+        run: vendor/bin/phpcs --config-set ignore_warnings_on_exit 1 --report=full --standard=WordPress --extensions=php --ignore=*/vendor/*,*/node_modules/* .
 
       - name: PHP Compatibility Check
         run: vendor/bin/phpcs --standard=PHPCompatibilityWP --runtime-set testVersion 7.4- .
