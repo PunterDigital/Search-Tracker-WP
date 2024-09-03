@@ -44,14 +44,29 @@ jobs:
 
       - name: PHP Code Sniffer
         run: |
-          vendor/bin/phpcs --report=full --report-file=phpcs_report.txt --standard=WordPress --extensions=php --ignore=*/vendor/*,*/node_modules/* .
-          if grep -q "FOUND [1-9][0-9]* ERROR" phpcs_report.txt; then
+          # Run PHPCS and capture its output and exit code
+          phpcs_output=$(vendor/bin/phpcs --report=full --standard=WordPress --extensions=php --ignore=*/vendor/*,*/node_modules/* . 2>&1) || phpcs_exit_code=$?
+          
+          # Output the PHPCS results
+          echo "$phpcs_output"
+          
+          # Check for errors in the output
+          if echo "$phpcs_output" | grep -q "FOUND [1-9][0-9]* ERROR"; then
             echo "PHPCS found errors. Failing the build."
             exit 1
+          elif [ -n "$phpcs_exit_code" ]; then
+            echo "PHPCS encountered an error. Exit code: $phpcs_exit_code"
+            exit $phpcs_exit_code
           else
             echo "PHPCS found no errors. Warnings may exist but build will continue."
-            cat phpcs_report.txt
           fi
+          continue-on-error: true
+    
+          - name: Check PHPCS result
+            if: steps.phpcs.outcome == 'failure'
+            run: |
+              echo "PHPCS check failed. Please review the output above for errors."
+              exit 1
 
       - name: PHP Compatibility Check
         run: vendor/bin/phpcs --standard=PHPCompatibilityWP --runtime-set testVersion 7.4- .
