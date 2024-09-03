@@ -49,7 +49,7 @@ jobs:
         run: vendor/bin/phpcs --config-set ignore_warnings_on_exit 1 --standard=PHPCompatibilityWP --runtime-set testVersion 7.4- --ignore=*/vendor/*,*/node_modules/* .
 
       - name: PHP Mess Detector
-        run: vendor/bin/phpmd --exclude=*/vendor/*,*/node_modules/* . text,cleancode,codesize,controversial,design,naming,unusedcode
+        run: vendor/bin/phpmd . text,cleancode,codesize,controversial,design,naming,unusedcode --exclude=*/vendor/*,*/node_modules/*
 
       - name: PHPUnit Tests
         run: vendor/bin/phpunit
