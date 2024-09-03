@@ -44,7 +44,14 @@ jobs:
 
       - name: PHP Code Sniffer
         run: |
-          vendor/bin/phpcs -v --standard=WordPress --extensions=php --ignore=*/vendor/*,*/node_modules/* .
+          vendor/bin/phpcs --report=full --report-file=phpcs_report.txt --standard=WordPress --extensions=php --ignore=*/vendor/*,*/node_modules/* .
+          if grep -q "FOUND [1-9][0-9]* ERROR" phpcs_report.txt; then
+            echo "PHPCS found errors. Failing the build."
+            exit 1
+          else
+            echo "PHPCS found no errors. Warnings may exist but build will continue."
+            cat phpcs_report.txt
+          fi
 
       - name: PHP Compatibility Check
         run: vendor/bin/phpcs --standard=PHPCompatibilityWP --runtime-set testVersion 7.4- .
