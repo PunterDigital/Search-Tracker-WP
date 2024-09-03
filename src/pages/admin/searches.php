@@ -9,23 +9,17 @@
  * Function to display user searches admin page
  */
 function user_searches_admin_page() {
-	global $wpdb;
+	$results = array();
 
-	$table_name = $wpdb->prefix . 'user_searches';
+    $unique_searches = get_unique_searches();
+    $total_searches = get_search_count();
 
-	// Get the total number of searches.
-	$total_searches = $wpdb->get_var(
-		$wpdb->prepare( 'SELECT COUNT(*) FROM `%s`', $table_name )
-	);
-
-	// Get the count of each search query.
-	$results = $wpdb->get_results(
-		$wpdb->prepare(
-			'SELECT search_query, COUNT(*) as count FROM `%s` GROUP BY search_query ORDER BY count DESC',
-			$table_name
-		),
-		ARRAY_A
-	);
+    foreach ($unique_searches as $search) {
+        $results[] = array(
+            'search_query' => $search,
+            'count' => get_search_count($search),
+        );
+    }
 
 	echo '<div class="wrap">';
 		echo '<h1>User Searches</h1>';
@@ -40,7 +34,7 @@ function user_searches_admin_page() {
 
 	foreach ( $results as $row ) {
 		$percentage = round( ( $row['count'] / $total_searches ) * 100, 2 );
-		echo '<tr><td>' . esc_html( $row['search_query'] ) . '</td><td>' . esc_html( $row['count'] ) . '</td><td>' . esc_html( $percentage ) . '%</td>';
+		echo '<tr><td>' . esc_html( $row['search'] ) . '</td><td>' . esc_html( $row['count'] ) . '</td><td>' . esc_html( $percentage ) . '%</td>';
 		echo '<td><div class="percentage-bar" style="width:' . esc_html( $percentage ) . '%;"></div></td></tr>';
 	}
 
