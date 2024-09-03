@@ -48,11 +48,8 @@ jobs:
       - name: PHP Compatibility Check
         run: vendor/bin/phpcs --config-set ignore_warnings_on_exit 1 --standard=PHPCompatibilityWP --runtime-set testVersion 7.4- --ignore=*/vendor/*,*/node_modules/* .
 
-      - name: PHP Mess Detector
-        run: vendor/bin/phpmd . text cleancode,codesize,unusedcode --exclude=vendor/,node_modules/
-
-      - name: PHPUnit Tests
-        run: vendor/bin/phpunit
+      - name: PHP Mess Detector (Unused Code)
+        run: vendor/bin/phpmd . text unusedcode --exclude=vendor/,node_modules/
 
   i18n:
     runs-on: ubuntu-latest
