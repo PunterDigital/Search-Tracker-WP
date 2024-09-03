@@ -1,39 +1,53 @@
 <?php
 /**
-* Function to display user searches admin page
-*/
+ * Displays the admin page to find searches
+ *
+ * @package Search_Tracker
+ */
+
+/**
+ * Function to display user searches admin page
+ */
 function user_searches_admin_page() {
-    global $wpdb;
+	global $wpdb;
 
-    $table_name = $wpdb->prefix . 'user_searches';
+	$table_name = $wpdb->prefix . 'user_searches';
 
-    // Get the total number of searches
-    $total_searches = $wpdb->get_var( "SELECT COUNT(*) FROM $table_name" );
+	// Get the total number of searches.
+	$total_searches = $wpdb->get_var(
+		$wpdb->prepare( 'SELECT COUNT(*) FROM `%s`', $table_name )
+	);
 
-    // Get the count of each search query
-    $results = $wpdb->get_results( "SELECT search_query, COUNT(*) as count FROM $table_name GROUP BY search_query ORDER BY count DESC", ARRAY_A );
+	// Get the count of each search query.
+	$results = $wpdb->get_results(
+		$wpdb->prepare(
+			'SELECT search_query, COUNT(*) as count FROM `%s` GROUP BY search_query ORDER BY count DESC',
+			$table_name
+		),
+		ARRAY_A
+	);
 
-    echo '<div class="wrap">';
-        echo '<h1>User Searches</h1>';
+	echo '<div class="wrap">';
+		echo '<h1>User Searches</h1>';
 
-        if ( empty( $results ) ) {
-        echo '<p>No user searches found.</p>';
-        return;
-        }
+	if ( empty( $results ) ) {
+		echo '<p>No user searches found.</p>';
+		return;
+	}
 
-        echo '<table>';
-            echo '<tr><th>Search Query</th><th>Count</th><th>Percentage</th><th>Bar</th></tr>';
+		echo '<table>';
+			echo '<tr><th>Search Query</th><th>Count</th><th>Percentage</th><th>Bar</th></tr>';
 
-            foreach ( $results as $row ) {
-            $percentage = round( ( $row['count'] / $total_searches ) * 100, 2 );
-            echo '<tr><td>' . esc_html( $row['search_query'] ) . '</td><td>' . esc_html( $row['count'] ) . '</td><td>' . esc_html( $percentage ) . '%</td>';
-                echo '<td><div class="percentage-bar" style="width:' . $percentage . '%;"></div></td></tr>';
-            }
+	foreach ( $results as $row ) {
+		$percentage = round( ( $row['count'] / $total_searches ) * 100, 2 );
+		echo '<tr><td>' . esc_html( $row['search_query'] ) . '</td><td>' . esc_html( $row['count'] ) . '</td><td>' . esc_html( $percentage ) . '%</td>';
+		echo '<td><div class="percentage-bar" style="width:' . esc_html( $percentage ) . '%;"></div></td></tr>';
+	}
 
-            echo '</table>';
-        echo '</div>';
+			echo '</table>';
+		echo '</div>';
 
-    echo '<style>table {
+	echo '<style>table {
             width: 100%;
             max-width: 800px;
         } .percentage-bar {
@@ -80,10 +94,10 @@ function user_searches_admin_page() {
 }
 
 /**
-* Function to add user searches to admin menu
-*/
+ * Function to add user searches to admin menu
+ */
 function user_searches_admin_menu() {
-add_menu_page( 'User Searches', 'User Searches', 'manage_options', 'user-searches', 'user_searches_admin_page' );
+	add_menu_page( 'User Searches', 'User Searches', 'manage_options', 'user-searches', 'user_searches_admin_page' );
 }
 
 add_action( 'admin_menu', 'user_searches_admin_menu' );
