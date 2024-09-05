@@ -5,7 +5,7 @@ Description: Store and find what your users are searching for on your site
 Version: 1.0
 Author: PunterDigital
 Author URI: https://punterdigital.com
-License: GNU GENERAL PUBLIC LICENSE V3
+License: GPL v3
 text-domain: search-tracker
  *
 @package Search_Tracker

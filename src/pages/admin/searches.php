@@ -11,15 +11,15 @@
 function user_searches_admin_page() {
 	$results = array();
 
-    $unique_searches = get_unique_searches();
-    $total_searches = get_search_count();
+	$unique_searches = get_unique_searches();
+	$total_searches  = get_search_count();
 
-    foreach ($unique_searches as $search) {
-        $results[] = array(
-            'search_query' => $search,
-            'count' => get_search_count($search),
-        );
-    }
+	foreach ( $unique_searches as $search ) {
+		$results[] = array(
+			'search_query' => $search->search_query,
+			'count'        => get_search_count( $search->search_query ),
+		);
+	}
 
 	echo '<div class="wrap">';
 		echo '<h1>User Searches</h1>';
@@ -34,7 +34,7 @@ function user_searches_admin_page() {
 
 	foreach ( $results as $row ) {
 		$percentage = round( ( $row['count'] / $total_searches ) * 100, 2 );
-		echo '<tr><td>' . esc_html( $row['search'] ) . '</td><td>' . esc_html( $row['count'] ) . '</td><td>' . esc_html( $percentage ) . '%</td>';
+		echo '<tr><td>' . esc_html( $row['search_query'] ) . '</td><td>' . esc_html( $row['count'] ) . '</td><td>' . esc_html( $percentage ) . '%</td>';
 		echo '<td><div class="percentage-bar" style="width:' . esc_html( $percentage ) . '%;"></div></td></tr>';
 	}
 

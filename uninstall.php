@@ -20,7 +20,7 @@ if ( $delete_on_uninstall ) {
 	$table_name = $wpdb->prefix . 'user_searches';
 
 	// Drop the table.
-	$wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %i', $table_name ) );
+	$wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %s', $table_name ) );
 
 	// List of all options to delete.
 	$options_to_delete = array(

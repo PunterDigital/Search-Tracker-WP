@@ -30,12 +30,15 @@ function search_tracker_add_admin_menu() {
  */
 function search_tracker_settings_page() {
 	if ( isset( $_POST['submit'] ) && check_admin_referer( 'search_tracker_settings' ) ) {
-		$delete_on_uninstall = isset( $_POST['delete_on_uninstall'] ) ? 1 : 0;
+        $delete_on_uninstall = isset( $_POST['delete_on_uninstall'] ) ? 1 : 0;
+        $telemetry = isset( $_POST['search_tracker_telemetry_allowed'] ) ? 1 : 0;
+        update_option('search_tracker_telemetry_allowed', $telemetry);
 		update_option( 'search_tracker_delete_on_uninstall', $delete_on_uninstall );
 		echo '<div class="notice notice-success"><p>' . esc_html__( 'Settings saved.', 'search-tracker' ) . '</p></div>';
 	}
 
-	$delete_on_uninstall = get_option( 'search_tracker_delete_on_uninstall', 0 );
+    $delete_on_uninstall = get_option( 'search_tracker_delete_on_uninstall', 0 );
+    $telemetry = get_option( 'search_tracker_telemetry_allowed', 0 );
 
 	?>
 	<div class="wrap">
@@ -46,12 +49,21 @@ function search_tracker_settings_page() {
 				<tr>
 					<th scope="row"><?php esc_html_e( 'Delete data on uninstall', 'search-tracker' ); ?></th>
 					<td>
-						<label for="delete_on_uninstall">
-							<input type="checkbox" name="delete_on_uninstall" id="delete_on_uninstall" value="1" <?php checked( $delete_on_uninstall, 1 ); ?>>
-							<?php esc_html_e( 'Delete all stored search data when the plugin is uninstalled', 'search-tracker' ); ?>
-						</label>
+                        <label for="delete_on_uninstall">
+                            <input type="checkbox" name="delete_on_uninstall" id="delete_on_uninstall" value="1" <?php checked( $delete_on_uninstall, 1 ); ?>>
+                            <?php esc_html_e( 'Delete all stored search data when the plugin is uninstalled', 'search-tracker' ); ?>
+                        </label>
 					</td>
 				</tr>
+                <tr>
+                    <th scope="row"><?php esc_html_e( 'Telemetry', 'search-tracker' ); ?></th>
+                    <td>
+                        <label for="search_tracker_telemetry_allowed">
+                            <input type="checkbox" name="search_tracker_telemetry_allowed" id="search_tracker_telemetry_allowed" value="1" <?php checked( $telemetry, 1 ); ?>>
+                            <?php esc_html_e( 'Enable Telemetry', 'search-tracker' ); ?>
+                        </label>
+                    </td>
+                </tr>
 			</table>
 			<p class="submit">
 				<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php esc_attr_e( 'Save Changes', 'search-tracker' ); ?>">

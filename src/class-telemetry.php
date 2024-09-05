@@ -30,7 +30,10 @@ if ( ! class_exists( 'Search_Tracker\Telemetry' ) ) {
 		 * Activate telemetry functionality.
 		 */
 		public static function activate() {
-			add_option( 'search_tracker_show_telemetry_prompt', true );
+            if ( ! get_option( 'search_tracker_telemetry_allowed', null ) === null ) {
+                add_option( 'search_tracker_show_telemetry_prompt', true );
+            }
+
 			if ( ! wp_next_scheduled( 'search_tracker_telemetry_cron' ) ) {
 				wp_schedule_event( time(), 'daily', 'search_tracker_telemetry_cron' );
 			}
@@ -105,6 +108,11 @@ if ( ! class_exists( 'Search_Tracker\Telemetry' ) ) {
 				'active_theme'      => wp_get_theme()->get( 'Name' ),
 				'plugins'           => array(),
 			);
+
+			// Include the file with get_plugins() function.
+			if ( ! function_exists( 'get_plugins' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
 
 			$all_plugins = get_plugins();
 

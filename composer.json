@@ -22,7 +22,12 @@
         "phpcs": "phpcs --standard=WordPress",
         "phpcbf": "phpcbf --standard=WordPress",
         "phpmd": "phpmd . text cleancode,codesize,controversial,design,naming,unusedcode",
-        "phpunit": "phpunit"
+        "phpunit": "phpunit",
+        "zip": [
+            "Composer\\Config::disableProcessTimeout",
+            "rm -f ./search-tracker.zip",
+            "zip -r ./search-tracker.zip . -x '/.idea/*' -x '.DS_Store' -x '*.dist' -x '/vendor/*' -x '*/node_modules/*' -x '.git*' -x 'composer.*' -x 'package*.json' -x '*.zip'"
+        ]
     },
     "config": {
         "allow-plugins": {

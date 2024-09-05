@@ -1,6 +1,6 @@
 <?php
 /**
- * Setup functionality for Search Tracker
+ * Setup functionality for Search Tracker.
  *
  * @package Search_Tracker
  */
@@ -26,16 +26,16 @@ function user_searches_install() {
 		$charset_collate = $wpdb->get_charset_collate();
 
 		$sql = "CREATE TABLE $table_name (
-			id mediumint(9) NOT NULL AUTO_INCREMENT,
-			time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-			search_query text NOT NULL,
-			PRIMARY KEY  (id)
-		) $charset_collate;";
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+            search_query text NOT NULL,
+            PRIMARY KEY  (id)
+        ) $charset_collate";
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-		$result = $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.PreparedSQL.NotPrepared
+		$result = dbDelta( $sql );
 
-		if ( false === $result ) {
+		if ( empty( $result ) ) {
 			// Log the error, but use a proper logging mechanism in production.
 			error_log( "Failed to create table $table_name: " . $wpdb->last_error ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			return;

@@ -61,17 +61,17 @@ function get_searches( $query = '' ) {
 	$table_name = $wpdb->prefix . 'user_searches';
 
 	if ( '' === $query ) {
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching.
 		return $wpdb->get_results(
 			$wpdb->prepare( 'SELECT * FROM `%s`', $table_name )
 		);
 	} else {
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching.
 		return $wpdb->get_results(
 			$wpdb->prepare(
 				'SELECT * FROM `%s` WHERE search_query LIKE %s',
 				$table_name,
-				'%' . $wpdb->esc_like( $query ) . '%'
+				'%' . $wpdb->esc( $query ) . '%'
 			)
 		);
 	}
@@ -88,12 +88,10 @@ function get_search_count( $search_query = '' ) {
 	$table_name = $wpdb->prefix . 'user_searches';
 
 	if ( '' === $search_query ) {
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		return (int) $wpdb->get_var(
-			$wpdb->prepare( 'SELECT COUNT(*) FROM `%s`', $table_name )
-		);
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching.
+		return (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `%s`', $table_name ) );
 	} else {
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching.
 		return (int) $wpdb->get_var(
 			$wpdb->prepare(
 				'SELECT COUNT(*) FROM `%s` WHERE search_query LIKE %s',
@@ -113,8 +111,6 @@ function get_unique_searches() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'user_searches';
 
-    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-	return $wpdb->get_results(
-		$wpdb->prepare( 'SELECT DISTINCT search_query FROM `%s`', $table_name )
-	);
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching.
+	return $wpdb->get_results( $wpdb->prepare( 'SELECT DISTINCT search_query FROM `%s`', $table_name ) );
 }
