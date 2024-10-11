@@ -54,10 +54,9 @@ Telemetry::init();
 /**
  * Enqueues admin scripts
  *
- * @param $hook
  * @return void
  */
-function pdwpst_enqueue_admin_scripts($hook) {
+function pdwpst_enqueue_admin_scripts() {
     // Enqueue the CSS file
     wp_enqueue_style('pdwpst_styles', get_template_directory_uri() . 'assets/css/style.css');
 }
