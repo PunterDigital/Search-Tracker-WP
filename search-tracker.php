@@ -13,8 +13,6 @@ text-domain: search-tracker
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-use PD_Search_Tracker\Telemetry;
-
 // Global variables.
 define( 'SEARCH_TRACKER_VERSION', '1.0.0' );
 define( 'SEARCH_TRACKER_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
