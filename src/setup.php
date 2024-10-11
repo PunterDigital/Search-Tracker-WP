@@ -37,6 +37,8 @@ function pdwpst_user_searches_install() {
             PRIMARY KEY  (id)
         ) $charset_collate;";
 
+        $wpdb->query($sql);
+
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
         // Check if the table was actually created
         $table_created = $wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table_name)) === $table_name;
