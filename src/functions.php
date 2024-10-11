@@ -109,22 +109,15 @@ function pdwpst_get_unique_searches() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'pdwpst_user_searches';
 
-    error_log("pdwpst_get_unique_searches: Attempting to query table {$table_name}");
-
     // Check if the table exists
     $table_exists = $wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table_name)) === $table_name;
-    error_log("pdwpst_get_unique_searches: Table {$table_name} exists: " . ($table_exists ? 'true' : 'false'));
 
     if (!$table_exists) {
-        error_log("pdwpst_get_unique_searches: Table {$table_name} does not exist!");
         return array();
     }
 
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching.
     $results = $wpdb->get_results("SELECT DISTINCT search_query FROM {$table_name}");
-
-    error_log("pdwpst_get_unique_searches: Query executed. Results: " . print_r($results, true));
-    error_log("pdwpst_get_unique_searches: Last MySQL error: " . $wpdb->last_error);
 
     return $results;
 }
