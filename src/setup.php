@@ -38,9 +38,6 @@ function pdwpst_user_searches_install() {
         ) $charset_collate;";
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-
-        $result = dbDelta($sql);
-
         // Check if the table was actually created
         $table_created = $wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table_name)) === $table_name;
 
