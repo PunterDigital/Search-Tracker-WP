@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param string $s The search query.
  * @return string The sanitized search query.
  */
-function store_search_query( $s ) {
+function pdwpst_store_search_query( $s ) {
 	global $wpdb;
 	static $stored = false;
 
@@ -56,7 +56,7 @@ function store_search_query( $s ) {
  * @param string $query Optional search query to filter results.
  * @return array An array of search results.
  */
-function get_searches( $query = '' ) {
+function pdwpst_get_searches( $query = '' ) {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'user_searches';
 
@@ -83,7 +83,7 @@ function get_searches( $query = '' ) {
  * @param string $search_query Optional search query to filter count.
  * @return int The number of searches.
  */
-function get_search_count( $search_query = '' ) {
+function pdwpst_get_search_count( $search_query = '' ) {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'user_searches';
 
@@ -107,7 +107,7 @@ function get_search_count( $search_query = '' ) {
  *
  * @return array An array of unique search queries.
  */
-function get_unique_searches() {
+function pdwpst_get_unique_searches() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'user_searches';
 

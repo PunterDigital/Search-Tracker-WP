@@ -20,6 +20,10 @@ Features:
 * See what search is the most popular on your site
 * See what search is the least popular on your site
 
+*Third Party Services*
+We make use of a telemetry service found at https://telemetry.punterdigital.com. More information about telemetry collection can be found on [the plugin documentation](https://scratched-pull-639.notion.site/Installation-15ec595ade0a4969a89d096da2233c0e?pvs=4).
+The privacy policy for this service can be found on (our website)[https://punterdigital.com/privacy]
+
 == Frequently Asked Questions ==
 
 = What does this plugin do? =

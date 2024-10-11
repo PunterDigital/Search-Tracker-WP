@@ -5,7 +5,7 @@
  * @package Search_Tracker
  */
 
-use Search_Tracker\Telemetry;
+use PD_Search_Tracker\Telemetry;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -16,7 +16,7 @@ define( 'USER_SEARCHES_DB_VERSION', '1.0' );
 /**
  * Function to install user searches table and initialize plugin.
  */
-function user_searches_install() {
+function pdwpst_user_searches_install() {
 	global $wpdb;
 
 	$table_name = $wpdb->prefix . 'user_searches';

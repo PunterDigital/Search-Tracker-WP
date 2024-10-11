@@ -1,0 +1,43 @@
+table {
+    width: 100%;
+    max-width: 800px;
+} .percentage-bar {
+      height: 20px;
+      background-color: #4CAF50;
+  }
+
+.wrap {
+    font-family: Arial, sans-serif;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f7f7f7;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.button {
+    background-color: #007cba;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: none;
+    border-radius: 3px;
+}
+
+.button:hover {
+    background-color: #005fa3;
+}

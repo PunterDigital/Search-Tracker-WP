@@ -5,19 +5,21 @@
  * @package Search_Tracker
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 /**
  * Function to display user searches admin page
  */
-function user_searches_admin_page() {
+function pdwpst_user_searches_admin_page() {
 	$results = array();
 
-	$unique_searches = get_unique_searches();
-	$total_searches  = get_search_count();
+	$unique_searches = pdwpst_get_unique_searches();
+	$total_searches  = pdwpst_get_search_count();
 
 	foreach ( $unique_searches as $search ) {
 		$results[] = array(
 			'search_query' => $search->search_query,
-			'count'        => get_search_count( $search->search_query ),
+			'count'        => pdwpst_get_search_count( $search->search_query ),
 		);
 	}
 
@@ -40,58 +42,13 @@ function user_searches_admin_page() {
 
 			echo '</table>';
 		echo '</div>';
-
-	echo '<style>table {
-            width: 100%;
-            max-width: 800px;
-        } .percentage-bar {
-              height: 20px;
-              background-color: #4CAF50;
-          }
-    
-        .wrap {
-            font-family: Arial, sans-serif;
-        }
-    
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-    
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-    
-        th {
-            background-color: #f7f7f7;
-        }
-    
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    
-        .button {
-            background-color: #007cba;
-            color: white;
-            padding: 5px 10px;
-            text-decoration: none;
-            border: none;
-            border-radius: 3px;
-        }
-    
-        .button:hover {
-            background-color: #005fa3;
-        }
-    </style>';
 }
 
 /**
  * Function to add user searches to admin menu
  */
-function user_searches_admin_menu() {
-	add_menu_page( 'User Searches', 'User Searches', 'manage_options', 'user-searches', 'user_searches_admin_page' );
+function pdwpst_user_searches_admin_menu() {
+	add_menu_page( 'User Searches', 'User Searches', 'manage_options', 'user-searches', 'pdwpst_user_searches_admin_page' );
 }
 
-add_action( 'admin_menu', 'user_searches_admin_menu' );
+add_action( 'admin_menu', 'pdwpst_user_searches_admin_menu' );
