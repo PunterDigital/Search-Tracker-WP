@@ -54,7 +54,12 @@ Telemetry::init();
  *
  * @return void
  */
-function pdwpst_enqueue_admin_scripts() {
+function pdwpst_enqueue_admin_scripts( $hook ) {
+    // Check if we're on the plugin's admin page
+    if ( 'toplevel_page_user-searches' !== $hook ) {
+        return;
+    }
+
     // Get the URL to the plugin directory
     $plugin_url = plugin_dir_url( __FILE__ );
 
