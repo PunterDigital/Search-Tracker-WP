@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WP_Search_Tracker\Telemetry' ) ) {
+if ( ! class_exists( 'PD_Search_Tracker\Telemetry' ) ) {
 	/**
 	 * Telemetry class for handling data collection and opt-in/opt-out functionality.
 	 */
@@ -126,7 +126,7 @@ if ( ! class_exists( 'WP_Search_Tracker\Telemetry' ) ) {
 
 			$data = array(
 				'name'       => 'Search Tracker',
-				'version'    => SEARCH_TRACKER_VERSION,
+				'version'    => PDWPST_SEARCH_TRACKER_VERSION,
 				'event_type' => 'plugin_activated',
 				'event_data' => $event_data,
 			);

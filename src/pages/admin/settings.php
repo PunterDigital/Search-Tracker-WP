@@ -21,7 +21,7 @@ function pdwpst_search_tracker_add_admin_menu() {
 		'Search Tracker',
 		'manage_options',
 		'search-tracker-settings',
-		'search_tracker_settings_page'
+		'pdwpst_search_tracker_settings_page'
 	);
 }
 

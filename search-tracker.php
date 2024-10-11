@@ -11,24 +11,24 @@ text-domain: search-tracker
 @package Search_Tracker
  */
 
+use PD_Search_Tracker\Telemetry;
+
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 // Global variables.
-define( 'SEARCH_TRACKER_VERSION', '1.0.0' );
-define( 'SEARCH_TRACKER_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-
-require_once SEARCH_TRACKER_PLUGIN_DIR . 'src/class-telemetry.php';
+define( 'PDWPST_SEARCH_TRACKER_VERSION', '1.0.0' );
+define( 'PDWPST_SEARCH_TRACKER_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 // Telemetry.
-require 'src/class-telemetry.php';
+require PDWPST_SEARCH_TRACKER_PLUGIN_DIR . 'src/class-telemetry.php';
 
 // Setup and Uninstall.
-require 'src/setup.php';
-require 'src/functions.php';
+require PDWPST_SEARCH_TRACKER_PLUGIN_DIR . 'src/setup.php';
+require PDWPST_SEARCH_TRACKER_PLUGIN_DIR . 'src/functions.php';
 
 // Pages.
-require 'src/pages/admin/settings.php';
-require 'src/pages/admin/searches.php';
+require PDWPST_SEARCH_TRACKER_PLUGIN_DIR . 'src/pages/admin/settings.php';
+require PDWPST_SEARCH_TRACKER_PLUGIN_DIR . 'src/pages/admin/searches.php';
 
 // Hooks.
 register_activation_hook( __FILE__, 'pdwpst_user_searches_install' );
@@ -55,7 +55,10 @@ Telemetry::init();
  * @return void
  */
 function pdwpst_enqueue_admin_scripts() {
+    // Get the URL to the plugin directory
+    $plugin_url = plugin_dir_url( __FILE__ );
+
     // Enqueue the CSS file
-    wp_enqueue_style('pdwpst_styles', get_template_directory_uri() . 'assets/css/style.css');
+    wp_enqueue_style('pdwpst_styles', $plugin_url . 'assets/css/style.css', array(), PDWPST_SEARCH_TRACKER_VERSION);
 }
 add_action('admin_enqueue_scripts', 'pdwpst_enqueue_admin_scripts');

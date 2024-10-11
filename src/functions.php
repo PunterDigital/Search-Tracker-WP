@@ -7,7 +7,7 @@
 
 // Prevent direct file access.
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 /**
@@ -17,37 +17,37 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string The sanitized search query.
  */
 function pdwpst_store_search_query( $s ) {
-	global $wpdb;
-	static $stored = false;
+    global $wpdb;
+    static $stored = false;
 
-	if ( '' === $s ) {
-		return $s;
-	}
+    if ( '' === $s ) {
+        return $s;
+    }
 
-	// If the search query has already been stored for this request, return early.
-	if ( $stored ) {
-		return $s;
-	}
+    // If the search query has already been stored for this request, return early.
+    if ( $stored ) {
+        return $s;
+    }
 
-	$table_name = $wpdb->prefix . 'user_searches';
+    $table_name = $wpdb->prefix . 'pdwpst_user_searches';
 
-	$s = sanitize_text_field( $s );
+    $s = sanitize_text_field( $s );
 
-	$wpdb->insert(
-		$table_name,
-		array(
-			'time'         => current_time( 'mysql' ),
-			'search_query' => $s,
-		),
-		array(
-			'%s',
-			'%s',
-		)
-	);
+    $wpdb->insert(
+        $table_name,
+        array(
+            'time'         => current_time( 'mysql' ),
+            'search_query' => $s,
+        ),
+        array(
+            '%s',
+            '%s',
+        )
+    );
 
-	$stored = true;
+    $stored = true;
 
-	return $s;
+    return $s;
 }
 
 /**
@@ -57,24 +57,23 @@ function pdwpst_store_search_query( $s ) {
  * @return array An array of search results.
  */
 function pdwpst_get_searches( $query = '' ) {
-	global $wpdb;
-	$table_name = $wpdb->prefix . 'user_searches';
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'pdwpst_user_searches';
 
-	if ( '' === $query ) {
+    if ( '' === $query ) {
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching.
-		return $wpdb->get_results(
-			$wpdb->prepare( 'SELECT * FROM `%s`', $table_name )
-		);
-	} else {
+        return $wpdb->get_results(
+            $wpdb->prepare( "SELECT * FROM {$table_name}" )
+        );
+    } else {
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching.
-		return $wpdb->get_results(
-			$wpdb->prepare(
-				'SELECT * FROM `%s` WHERE search_query LIKE %s',
-				$table_name,
-				'%' . $wpdb->esc( $query ) . '%'
-			)
-		);
-	}
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT * FROM {$table_name} WHERE search_query LIKE %s",
+                '%' . $wpdb->esc_like( $query ) . '%'
+            )
+        );
+    }
 }
 
 /**
@@ -84,22 +83,21 @@ function pdwpst_get_searches( $query = '' ) {
  * @return int The number of searches.
  */
 function pdwpst_get_search_count( $search_query = '' ) {
-	global $wpdb;
-	$table_name = $wpdb->prefix . 'user_searches';
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'pdwpst_user_searches';
 
-	if ( '' === $search_query ) {
+    if ( '' === $search_query ) {
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching.
-		return (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM `%s`', $table_name ) );
-	} else {
+        return (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table_name}" );
+    } else {
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching.
-		return (int) $wpdb->get_var(
-			$wpdb->prepare(
-				'SELECT COUNT(*) FROM `%s` WHERE search_query LIKE %s',
-				$table_name,
-				'%' . $wpdb->esc_like( $search_query ) . '%'
-			)
-		);
-	}
+        return (int) $wpdb->get_var(
+            $wpdb->prepare(
+                "SELECT COUNT(*) FROM {$table_name} WHERE search_query LIKE %s",
+                '%' . $wpdb->esc_like( $search_query ) . '%'
+            )
+        );
+    }
 }
 
 /**
@@ -108,9 +106,25 @@ function pdwpst_get_search_count( $search_query = '' ) {
  * @return array An array of unique search queries.
  */
 function pdwpst_get_unique_searches() {
-	global $wpdb;
-	$table_name = $wpdb->prefix . 'user_searches';
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'pdwpst_user_searches';
+
+    error_log("pdwpst_get_unique_searches: Attempting to query table {$table_name}");
+
+    // Check if the table exists
+    $table_exists = $wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table_name)) === $table_name;
+    error_log("pdwpst_get_unique_searches: Table {$table_name} exists: " . ($table_exists ? 'true' : 'false'));
+
+    if (!$table_exists) {
+        error_log("pdwpst_get_unique_searches: Table {$table_name} does not exist!");
+        return array();
+    }
 
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching.
-	return $wpdb->get_results( $wpdb->prepare( 'SELECT DISTINCT search_query FROM `%s`', $table_name ) );
+    $results = $wpdb->get_results("SELECT DISTINCT search_query FROM {$table_name}");
+
+    error_log("pdwpst_get_unique_searches: Query executed. Results: " . print_r($results, true));
+    error_log("pdwpst_get_unique_searches: Last MySQL error: " . $wpdb->last_error);
+
+    return $results;
 }
