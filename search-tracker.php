@@ -6,7 +6,7 @@ Version: 1.0
 Author: PunterDigital
 Author URI: https://punterdigital.com
 License: GPL v3
-text-domain: search-tracker
+text-domain: pdwpst-search-tracker
  *
 @package Search_Tracker
  */
@@ -64,6 +64,6 @@ function pdwpst_enqueue_admin_scripts( $hook ) {
     $plugin_url = plugin_dir_url( __FILE__ );
 
     // Enqueue the CSS file
-    wp_enqueue_style('pdwpst_styles', $plugin_url . 'assets/css/style.css', array(), PDWPST_SEARCH_TRACKER_VERSION);
+    wp_enqueue_style('pdwpst_styles', $plugin_url . 'src/css/style.css', array(), PDWPST_SEARCH_TRACKER_VERSION);
 }
 add_action('admin_enqueue_scripts', 'pdwpst_enqueue_admin_scripts');
