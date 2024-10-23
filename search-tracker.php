@@ -6,7 +6,7 @@ Version: 1.0
 Author: PunterDigital
 Author URI: https://punterdigital.com
 License: GPL v3
-text-domain: pdwpst-search-tracker
+text-domain: search-tracker
  *
 @package Search_Tracker
  */

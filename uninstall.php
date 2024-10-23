@@ -24,7 +24,7 @@ if ( $delete_on_uninstall ) {
 
 	// List of all options to delete.
 	$options_to_delete = array(
-		'user_searches_db_version',
+		'pdwpst_user_searches_db_version',
 		'pdwpst_search_tracker_delete_on_uninstall',
 		'pdwpst_search_tracker_telemetry_allowed',
 		'pdwpst_search_tracker_show_telemetry_prompt',

@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'USER_SEARCHES_DB_VERSION', '1.0' );
+define( 'PDWPST_USER_SEARCHES_DB_VERSION', '1.0' );
 
 require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
@@ -44,14 +44,14 @@ function pdwpst_user_searches_install() {
         $table_created = $wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE %s", $table_name)) === $table_name;
 
         if ($table_created) {
-            add_option('pdwpst_user_searches_db_version', USER_SEARCHES_DB_VERSION);
+            add_option('pdwpst_user_searches_db_version', PDWPST_USER_SEARCHES_DB_VERSION);
         }
     } else {
 
         $installed_ver = get_option('pdwpst_user_searches_db_version');
 
-        if (USER_SEARCHES_DB_VERSION !== $installed_ver) {
-            update_option('pdwpst_user_searches_db_version', USER_SEARCHES_DB_VERSION);
+        if (PDWPST_USER_SEARCHES_DB_VERSION !== $installed_ver) {
+            update_option('pdwpst_user_searches_db_version', PDWPST_USER_SEARCHES_DB_VERSION);
         }
     }
     Telemetry::activate();

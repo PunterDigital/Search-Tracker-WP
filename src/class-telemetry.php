@@ -61,11 +61,11 @@ if ( ! class_exists( 'PD_Search_Tracker\Telemetry' ) ) {
 		public static function display_telemetry_prompt() {
 			?>
 			<div class="notice notice-info is-dismissible">
-				<p><?php esc_html_e( 'Would you like to help improve Search Tracker by sending anonymous usage data?', 'pdwpst-search-tracker' ); ?></p>
-				<p><?php esc_html_e( 'We collect your WordPress version, installed plugins (and which ones are active), PHP version, and active theme. No sensitive data is collected.', 'pdwpst-search-tracker' ); ?></p>
+				<p><?php esc_html_e( 'Would you like to help improve Search Tracker by sending anonymous usage data?', 'search-tracker' ); ?></p>
+				<p><?php esc_html_e( 'We collect your WordPress version, installed plugins (and which ones are active), PHP version, and active theme. No sensitive data is collected.', 'search-tracker' ); ?></p>
 				<p>
-					<a href="<?php echo esc_url( admin_url( 'admin-post.php?action=pdwpst_search_tracker_telemetry_opt_in' ) ); ?>" class="button button-primary"><?php esc_html_e( 'Yes, I\'d like to help', 'pdwpst-search-tracker' ); ?></a>
-					<a href="<?php echo esc_url( admin_url( 'admin-post.php?action=pdwpst_search_tracker_telemetry_opt_out' ) ); ?>" class="button"><?php esc_html_e( 'No, thanks', 'pdwpst-search-tracker' ); ?></a>
+					<a href="<?php echo esc_url( admin_url( 'admin-post.php?action=pdwpst_search_tracker_telemetry_opt_in' ) ); ?>" class="button button-primary"><?php esc_html_e( 'Yes, I\'d like to help', 'search-tracker' ); ?></a>
+					<a href="<?php echo esc_url( admin_url( 'admin-post.php?action=pdwpst_search_tracker_telemetry_opt_out' ) ); ?>" class="button"><?php esc_html_e( 'No, thanks', 'search-tracker' ); ?></a>
 				</p>
 			</div>
 			<?php
