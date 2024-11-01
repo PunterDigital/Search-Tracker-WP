@@ -17,15 +17,17 @@ jobs:
         run: |
           mkdir -p dist
           rsync -av --progress ./ dist/ \
-          -x '/.idea/*' \
-          -x '.DS_Store' \
-          -x '*.dist' \
-          -x '/vendor/*' \
-          -x '*/node_modules/*' \
-          -x '.git*' \
-          -x 'composer.*' \
-          -x 'package*.json' \
-          -x '*.zip'
+          --exclude='.idea' \
+          --exclude='.DS_Store' \
+          --exclude='*.dist' \
+          --exclude='vendor' \
+          --exclude='node_modules' \
+          --exclude='.git' \
+          --exclude='.gitignore' \
+          --exclude='composer.*' \
+          --exclude='package*.json' \
+          --exclude='*.zip' \
+          --exclude='dist'
 
       - name: WordPress Plugin Deploy
         uses: nk-o/action-wordpress-plugin-deploy@master
