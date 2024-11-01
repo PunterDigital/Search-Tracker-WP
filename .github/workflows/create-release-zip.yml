@@ -1,9 +1,9 @@
-name: Create Release Zip
+name: Create RC Zip
 
 on:
   push:
     tags:
-      - 'v*' # This will trigger the action on any tag push starting with 'v'
+      - 'rc*' # This will trigger the action on any tag push starting with 'v'
 
 jobs:
   build:
