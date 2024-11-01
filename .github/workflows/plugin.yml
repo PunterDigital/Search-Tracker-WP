@@ -76,12 +76,12 @@ jobs:
 
       - name: Check plugin assets
         run: |
-          if [ ! -f "assets/icon-256x256.png" ]; then
-            echo "Error: assets/icon-256x256.png is missing"
+          if [ ! -f ".wordpress-org/icon-256x256.png" ]; then
+            echo "Error: .wordpress-org/icon-256x256.png is missing"
             exit 1
           fi
-          if [ ! -f "assets/banner-1544x500.png" ]; then
-            echo "Error: assets/banner-1544x500.png is missing"
+          if [ ! -f ".wordpress-org/banner-1544x500.png" ]; then
+            echo "Error: .wordpress-org/banner-1544x500.png is missing"
             exit 1
           fi
 

@@ -4,7 +4,7 @@ Donate link: https://punterdigital.com
 Tags: search, user searches, search tracking, search analytics
 Requires at least: 5.0
 Tested up to: 6.6.1
-Stable tag: 1.0
+Stable tag: 1.0.4
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -22,7 +22,7 @@ Features:
 
 *Third Party Services*
 We make use of a telemetry service found at https://telemetry.punterdigital.com. More information about telemetry collection can be found on [the plugin documentation](https://scratched-pull-639.notion.site/Installation-15ec595ade0a4969a89d096da2233c0e?pvs=4).
-The privacy policy for this service can be found on (our website)[https://punterdigital.com/privacy]
+The privacy policy for this service can be found on our website https://punterdigital.com/privacy
 
 == Frequently Asked Questions ==
 
